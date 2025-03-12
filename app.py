@@ -4,6 +4,8 @@ import joblib
 import folium
 from streamlit_folium import folium_static
 
+from about import about_project
+
 # Load the trained model
 model = joblib.load("restaurant_recommendation_model.pkl")
 
@@ -72,8 +74,11 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Navigation Menu using Streamlit tabs
-tab1, tab2 = st.tabs(["🍽️ Restaurants", "📍 Locations"])
+tab1, tab2, tab3 = st.tabs(["🍽️ Restaurants", "📍 Locations", "📖 About Project"])
 
+with tab3:
+    about_project()
+    
 # Sidebar Inputs
 with st.sidebar:
     st.header("🔍 Find Your Ideal Restaurant")
@@ -111,26 +116,29 @@ if find_button:
         with tab1:
             st.warning("⚠️ No matching restaurants found. Try different filters.")
     else:
-        # Display Restaurant Cards under "Restaurants" tab
+      # Display Restaurant Cards under "Restaurants" tab
         with tab1:
             st.subheader(f"🎯 Top Restaurant Recommendations in {city}")
-            cols = st.columns(2)  # 2-column layout for better UI
-
-            for i, row in recommendations.iterrows():
-                with cols[i % 2]:  # Alternate between columns
+            
+            # Ensure consistent two-column layout
+            cols = st.columns(2)  
+        
+            for index, row in enumerate(recommendations.iterrows()):
+                i, row_data = row
+                with cols[index % 2]:  # Ensures alternate placement
                     st.markdown(f"""
                         <div class="card">
-                            <h3>🍽 {row['Restaurant Name']}</h3>
-                            <p>📍 <b>City:</b> {row['City']}</p>
-                            <p>🏠 <b>Address:</b> {row['Address']}</p>
-                            <p>🍜 <b>Cuisine Type:</b> {row['Cuisines']}</p>
-                            <p>💰 <b>Average Cost for Two:</b> ₹{row['Average Cost for two']}</p>
-                            <p>⭐ <b>Rating:</b> {row['Aggregate rating']} ⭐ – {row['Rating text']}</p>
-                            <p>🛵 <b>Online Delivery:</b> { "Available" if row['Has Online delivery'] == 1 else "Not Available" }</p>
-                            <p>🪑 <b>Table Booking:</b> { "Available" if row['Has Table booking'] == 1 else "Not Available" }</p>
+                            <h3>🍽 {row_data['Restaurant Name']}</h3>
+                            <p>📍 <b>City:</b> {row_data['City']}</p>
+                            <p>🏠 <b>Address:</b> {row_data['Address']}</p>
+                            <p>🍜 <b>Cuisine Type:</b> {row_data['Cuisines']}</p>
+                            <p>💰 <b>Average Cost for Two:</b> ₹{row_data['Average Cost for two']}</p>
+                            <p>⭐ <b>Rating:</b> {row_data['Aggregate rating']} ⭐ – {row_data['Rating text']}</p>
+                            <p>🛵 <b>Online Delivery:</b> { "Available" if row_data['Has Online delivery'] == 1 else "Not Available" }</p>
+                            <p>🪑 <b>Table Booking:</b> { "Available" if row_data['Has Table booking'] == 1 else "Not Available" }</p>
                         </div>
-
                     """, unsafe_allow_html=True)
+     
 
         # Display Locations under "📍 Locations" tab
         with tab2:
