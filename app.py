@@ -11,7 +11,7 @@ model = joblib.load("restaurant_recommendation_model.pkl")
 restaurants_df = pd.read_csv("Dataset_Updated.csv")
 
 # Streamlit Page Configuration
-st.set_page_config(page_title="Restaurant Finder", layout="wide")
+st.set_page_config(page_title="Restaurant Recommander", layout="wide")
 
 # Custom CSS for professional styling
 st.markdown("""
