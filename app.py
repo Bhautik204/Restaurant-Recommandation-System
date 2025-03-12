@@ -101,7 +101,7 @@ def recommend_restaurants(country, city, cuisines, budget):
     filtered_df["Budget Difference"] = abs(filtered_df["Average Cost for two"] - budget)
     sorted_df = filtered_df.sort_values(by=["Budget Difference", "Aggregate rating"], ascending=[True, False])
 
-    return sorted_df.head(5)
+    return sorted_df.head(10)
 
 # Show results only when button is clicked
 if find_button:
@@ -121,14 +121,15 @@ if find_button:
                     st.markdown(f"""
                         <div class="card">
                             <h3>🍽 {row['Restaurant Name']}</h3>
-                            <p><b>📍 City:</b> {row['City']}</p>
-                            <p><b>🏠 Address:</b> {row['Address']}</p>
-                            <p><b>🍜 Cuisine Type:</b> {row['Cuisines']}</p>
-                            <p><b>💰 Average Cost for Two:</b> ₹{row['Average Cost for two']}</p>
-                            <p><b>⭐ Rating:</b> {row['Aggregate rating']} ⭐ – {row['Rating text']}</p>
-                            <p><b>🚀 Online Delivery:</b> {'Yes' if row['Has Online delivery'] == 1 else 'No'}</p>
-                            <p><b>🪑 Table Booking:</b> {'Yes' if row['Has Table booking'] == 1 else 'No'}</p>
+                            <p>📍 <b>City:</b> {row['City']}</p>
+                            <p>🏠 <b>Address:</b> {row['Address']}</p>
+                            <p>🍜 <b>Cuisine Type:</b> {row['Cuisines']}</p>
+                            <p>💰 <b>Average Cost for Two:</b> ₹{row['Average Cost for two']}</p>
+                            <p>⭐ <b>Rating:</b> {row['Aggregate rating']} ⭐ – {row['Rating text']}</p>
+                            <p>🛵 <b>Online Delivery:</b> { "Available" if row['Has Online delivery'] == 1 else "Not Available" }</p>
+                            <p>🪑 <b>Table Booking:</b> { "Available" if row['Has Table booking'] == 1 else "Not Available" }</p>
                         </div>
+
                     """, unsafe_allow_html=True)
 
         # Display Locations under "📍 Locations" tab
