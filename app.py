@@ -165,4 +165,4 @@ if find_button:
             folium_static(m)
 
 # Footer
-st.markdown("<div class='footer'>© 2025 Restaurant Finder | Built by Bhautik Patel</div>", unsafe_allow_html=True)
+st.markdown("<div class='footer'>© 2025 Restaurant Recommander | Built by Bhautik Patel</div>", unsafe_allow_html=True)
